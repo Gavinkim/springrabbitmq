@@ -27,7 +27,7 @@ http://localhost:15672
 ### queue type
 ````sql
     - Fanout (Broadcast to all queues) 기본 
-      하나의 메시지를 다양한 큐에 메시지를 전송 하도록 한다.
+      하나의 메시지를 여러개 큐에 메시지를 전송 하도록 한다.
         example: member 정보를 accounting,marketing 큐로 바인딩하여 cunsuming 하도록 한다.
           queue 생성: q.hr.account, q.hr.marketing
           exchange 생성: x.hr
@@ -36,19 +36,15 @@ http://localhost:15672
                 확인: queue 탭에서 바인딩 설정 되어있는지 확인 하도록 한다.
             
     
-    - Direct
-      지정한 큐로 보내도록 한다.
-      라우팅 키 기반으로 동작 한다.
-      메시지를 페기 할수 있다.
-      설정은 Fanout 과 동일하며, 타입 설정만 direct 로 지정한다.
-      스프링에서 메시지 전송시 타입을 지정하여 전송 하도록 한다.
+    - Direct (unicast)
+      지정된 routing key 를 가진 queue 에만 메시지를 전달한다.
     
-    - Topic
-      바인딩 된 큐와 아래 두가지 특별한 라우팅 키 기반 (정규식)으로 토픽에서 큐로 메시지를 전송 할 수 있다.
-      Multiple criteria routing
-      Tow special characters on routing key 
-        1. *
-        2. #
+    - Topic (multicast)
+      지정된 패턴 바인딩 형태에 일치하는 Queue 에만 메시지 전달.
+      #을 사용하여 여러 단어를 통한 문자열 패턴 매칭
+      *을 사용하여 문자열 패턴 매칭
+    - Header (multicast)
+      헤더에 포함된 key=value 의 일치조건에 따라서 메시지 전달.(multicast)
         
       
 ````
